@@ -1,6 +1,27 @@
-- As a user I can start the app with a given position or with the starting position.
+- As a user I can start the app with a given position or with the starting position. (DONE)
+-----------------------------------------------------------------------------------------------------
 - As a user I can ask the app to play a move
   or I can play a move to be evaluated by the app using the given opening db if the move
   made by the user is not in the db, the app should ask the user if he wants to add the move to the
   current line in the db.
--
+
+  we need a tree with :
+    - search(board): return a node.
+    - register_move(move):
+        this will add
+-----------------------------------------------------------------------------------------------------
+user starts the app :
+    - root = 'starting position'
+user makes a move : (e4)
+    - root.register_move(e4):
+        - makes a pseudo move.
+        - search's the tree for the new position :
+            - if the search returns a node:
+                    - set current to the found node.
+            - if None:
+                    - create a new node.
+                    - add it to the current node moves.
+                    - change current to the newly created node.
+
+
+ ---> current goal : build a search function. [DONE]
