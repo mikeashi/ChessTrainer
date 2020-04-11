@@ -1,0 +1,6 @@
+- As a user I can start the app with a given position or with the starting position.
+- As a user I can ask the app to play a move
+  or I can play a move to be evaluated by the app using the given opening db if the move
+  made by the user is not in the db, the app should ask the user if he wants to add the move to the
+  current line in the db.
+-
