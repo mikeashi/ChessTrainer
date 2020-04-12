@@ -31,3 +31,17 @@ class Tree:
     def back_to_root(self):
         while self.current is not self.root:
             self.current = self.current.parent
+
+    def search(self, board: chess.Board):
+        hash = BoardHelper.hash(board)
+        stack = [self.root]
+        result = []
+        while True:
+            tmp = stack.pop()
+            if tmp.hash == hash:
+                result.append(tmp)
+            for child in tmp.children:
+                stack.append(child)
+            if len(stack) == 0:
+                break
+        return result

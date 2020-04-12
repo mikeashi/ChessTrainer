@@ -64,6 +64,39 @@ class TestTree(TestCase):
         # after e4 there is one line: e5
         self.assertEqual(1, len(self.tree.root.children[1].children))
 
+    def test_search(self):
+        self.register_move('d2d4')
+        self.register_move('d7d5')
+        self.register_move('c2c4')
+        self.register_move('e7e6')
+        self.register_move('b1c3')
+        nc3 = self.tree.current
+
+        self.tree.back_to_root()
+        self.register_move('e2e4')
+
+        self.assertEqual(self.tree.search(nc3.board), [nc3])
+
+        self.tree.back_to_root()
+        self.register_move('c2c4')
+        self.register_move('d7d5')
+        self.register_move('d2d4')
+        self.register_move('e7e6')
+        self.register_move('b1c3')
+        nc3_2 = self.tree.current
+
+        self.assertEqual(self.tree.search(nc3.board), [nc3_2, nc3])
+
+        self.tree.back_to_root()
+        self.register_move('d2d4')
+        self.register_move('e7e6')
+        self.register_move('c2c4')
+        self.register_move('d7d5')
+        self.register_move('b1c3')
+        nc3_3 = self.tree.current
+
+        self.assertEqual(self.tree.search(nc3.board), [nc3_2, nc3_3, nc3])
+
     def register_move(self, move):
         self.tree.register_move(chess.Move.from_uci(move))
 

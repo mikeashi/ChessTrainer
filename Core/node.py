@@ -11,8 +11,6 @@ class Node:
         self.children = []
         self.parent = parent
 
-    def search(self, board: chess.Board):
-        pass
 
     def get_path(self):
         if self.parent is not None:
