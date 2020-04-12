@@ -7,8 +7,7 @@ from Core.tree import Tree
 
 class TestTree(TestCase):
     def setUp(self):
-        self.tree = Tree.from_fen("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1")
-        pass
+        self.tree = Tree()
 
     def test_register_a_new_move(self):
         self.register_move('e2e4')
@@ -67,3 +66,11 @@ class TestTree(TestCase):
 
     def register_move(self, move):
         self.tree.register_move(chess.Move.from_uci(move))
+
+    def pprint_tree(self, node, _prefix="", _last=True):
+        print(_prefix, "`- " if _last else "|- ", node.board.fen(), sep="")
+        _prefix += "   " if _last else "|  "
+        child_count = len(node.children)
+        for i, child in enumerate(node.children):
+            _last = i == (child_count - 1)
+            self.pprint_tree(child, _prefix, _last)

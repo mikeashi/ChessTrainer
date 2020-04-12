@@ -9,20 +9,17 @@ class Tree:
     root: Node = None
     current: Node = None
 
-    def __init__(self, board: chess.Board):
-        self.root = Node(board)
+    def __init__(self, board: chess.Board = chess.Board("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1")):
+        self.root = Node(board, None, None)
         self.current = self.root
 
     def register_move(self, move: chess.Move):
-        pseudo_board = BoardHelper.get_pseudo_board(self.current.board, move)
-        node = self.root.search(pseudo_board)
-
-        if node is not None:
-            self.current = node
-            return node
-
-        node = Node(pseudo_board, self.current)
-
+        for child in self.current.children:
+            if child.move == move:
+                self.current = child
+                return
+        new_board = BoardHelper.get_pseudo_board(self.current.board, move)
+        node = Node(new_board, move, self.current)
         self.current.children.append(node)
         self.current = node
 
@@ -34,14 +31,3 @@ class Tree:
     def back_to_root(self):
         while self.current is not self.root:
             self.current = self.current.parent
-
-    @classmethod
-    def from_fen(cls, fen):
-        return cls(chess.Board(fen))
-
-    @classmethod
-    def from_pgn(cls, pgn):
-        # TODO check if pgn is None
-        game = chess.pgn.read_game(pgn)
-        for move in game.mainline_moves():
-            print(move)

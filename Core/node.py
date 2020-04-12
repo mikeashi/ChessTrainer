@@ -4,21 +4,20 @@ from Helpers.board_helper import BoardHelper
 
 
 class Node:
-    def __init__(self, board: chess.Board, parent=None):
+    def __init__(self, board: chess.Board, move: chess.Move, parent):
         self.board = board
+        self.move = move
         self.hash = BoardHelper.hash(board)
         self.children = []
         self.parent = parent
 
     def search(self, board: chess.Board):
-        if BoardHelper.hash(board) == self.hash:
-            return self
-        for child in self.children:
-            tmp = child.search(board)
-            if tmp is not None:
-                return tmp
-        return None
+        pass
 
-    @classmethod
-    def from_fen(cls, fen, parent=None):
-        return cls(chess.Board(fen), parent)
+    def get_path(self):
+        if self.parent is not None:
+            parent_move = self.parent.get_path()
+            if parent_move is not None:
+                return self.parent.get_path() + '->' + self.move.uci()
+            else:
+                return self.move.uci()

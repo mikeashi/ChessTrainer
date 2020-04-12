@@ -1,7 +1,4 @@
 from unittest import TestCase
-
-import chess
-
 from Core.node import Node
 
 
