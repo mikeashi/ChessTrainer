@@ -21,13 +21,19 @@ class Tree:
             self.current = node
             return node
 
-        node = Node(pseudo_board)
+        node = Node(pseudo_board, self.current)
 
         self.current.children.append(node)
         self.current = node
 
-    def reset_current(self):
-        self.current = self.root
+    def back(self):
+        if self.current == self.root:
+            return
+        self.current = self.current.parent
+
+    def back_to_root(self):
+        while self.current is not self.root:
+            self.current = self.current.parent
 
     @classmethod
     def from_fen(cls, fen):

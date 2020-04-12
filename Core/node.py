@@ -4,10 +4,11 @@ from Helpers.board_helper import BoardHelper
 
 
 class Node:
-    def __init__(self, board: chess.Board):
+    def __init__(self, board: chess.Board, parent=None):
         self.board = board
         self.hash = BoardHelper.hash(board)
         self.children = []
+        self.parent = parent
 
     def search(self, board: chess.Board):
         if BoardHelper.hash(board) == self.hash:
@@ -19,5 +20,5 @@ class Node:
         return None
 
     @classmethod
-    def from_fen(cls, fen):
-        return cls(chess.Board(fen))
+    def from_fen(cls, fen, parent=None):
+        return cls(chess.Board(fen), parent)
