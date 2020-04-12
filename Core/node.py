@@ -1,17 +1,19 @@
-import chess.polyglot
+import chess
+
+from Helpers.board_helper import BoardHelper
 
 
 class Node:
     def __init__(self, board: chess.Board):
-        self.fen = board.board_fen()
-        self.hash = chess.polyglot.zobrist_hash(board)
+        self.board = board
+        self.hash = BoardHelper.hash(board)
         self.children = []
 
-    def search(self, wanted):
-        if wanted == self.hash:
+    def search(self, board: chess.Board):
+        if BoardHelper.hash(board) == self.hash:
             return self
         for child in self.children:
-            tmp = child.search(wanted)
+            tmp = child.search(board)
             if tmp is not None:
                 return tmp
         return None

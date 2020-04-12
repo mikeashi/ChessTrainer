@@ -1,0 +1,21 @@
+[Event "Import"]
+[Site "https://lichess.org/9SYCxLd4"]
+[Date "2020.04.12"]
+[Round "-"]
+[White "?"]
+[Black "?"]
+[Result "*"]
+[UTCDate "2020.04.12"]
+[UTCTime "00:59:55"]
+[WhiteElo "?"]
+[BlackElo "?"]
+[Variant "Standard"]
+[TimeControl "-"]
+[ECO "D31"]
+[Opening "Queen's Gambit Declined: Charousek (Petrosian) Variation"]
+[Termination "Unterminated"]
+[Annotator "lichess.org"]
+
+1. d4 d5 2. c4 e6 3. Nc3 Be7 { D31 Queen's Gambit Declined: Charousek (Petrosian) Variation } 4. cxd5 exd5 5. Bf4 c6 6. e3 Bf5 7. g4 *
+
+

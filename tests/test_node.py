@@ -25,4 +25,4 @@ class TestNode(TestCase):
         root.children.append(d4)
         root.children.append(e4)
 
-        self.assertEqual(root.search(nc3.hash), nc3)
+        self.assertEqual(root.search(nc3.board), nc3)

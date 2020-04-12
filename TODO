@@ -24,4 +24,4 @@ user makes a move : (e4)
                     - change current to the newly created node.
 
 
- ---> current goal : build a search function. [DONE]
+ ---> current goal : register_move() [DONE]
