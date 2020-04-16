@@ -4,6 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>ChessTrainer</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
     <!-- bulma style sheet-->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.8.2/css/bulma.min.css">
     <!-- chessboardjs style sheet-->
@@ -11,12 +13,36 @@
     <!-- chess.js -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/chess.js/0.10.2/chess.js"></script>
     <!-- chessboard.js -->
-    <script type="text/javascript" src="{{ url_for('static',filename='vendors/chessboardjs/js/chessboard-1.0.0.js') }}"></script>
+    <script type="text/javascript"
+            src="{{ url_for('static',filename='vendors/chessboardjs/js/chessboard-1.0.0.js') }}"></script>
 
     <script src="https://use.fontawesome.com/releases/v5.3.1/js/all.js"></script>
     <script type="text/javascript" src="{{ url_for('static',filename='js/app.js') }}"></script>
 </head>
 <body>
+    <div class="container is-fluid">
+        <nav class="navbar has-shadow is-spaced" role="navigation" aria-label="main navigation">
+            <div class="navbar-brand">
+                <a class="navbar-item">
+                    <p class="title">ChessTrainer</p>
+                </a>
+            </div>
+        </nav>
 
+        <div class="columns">
+            <div class="column">
+                First column
+            </div>
+            <div class="column">
+                <div id="board"></div>
+            </div>
+            <div class="column">
+                Third column
+            </div>
+        </div>
+    </div>
 </body>
+<script>
+    $(document).ready(init);
+</script>
 </html>
