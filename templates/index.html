@@ -20,27 +20,32 @@
     <script type="text/javascript" src="{{ url_for('static',filename='js/app.js') }}"></script>
 </head>
 <body>
-    <div class="container is-fluid">
-        <nav class="navbar has-shadow is-spaced" role="navigation" aria-label="main navigation">
-            <div class="navbar-brand">
-                <a class="navbar-item">
-                    <p class="title">ChessTrainer</p>
-                </a>
-            </div>
-        </nav>
+<div class="container is-fluid">
+    <nav class="navbar has-shadow is-spaced" role="navigation" aria-label="main navigation">
+        <div class="navbar-brand">
+            <a class="navbar-item">
+                <p class="title">ChessTrainer</p>
+            </a>
+        </div>
+    </nav>
 
-        <div class="columns">
-            <div class="column">
-                First column
-            </div>
-            <div class="column">
-                <div id="board"></div>
-            </div>
-            <div class="column">
-                Third column
-            </div>
+    <div class="columns">
+        <div class="column">
+            First column
+        </div>
+        <div class="column">
+            <div id="board"></div>
+        </div>
+        <div class="column">
+                <label>Status:</label>
+                <div id="status"></div>
+                <label>FEN:</label>
+                <div id="fen"></div>
+                <label>PGN:</label>
+                <div id="pgn"></div>
         </div>
     </div>
+</div>
 </body>
 <script>
     $(document).ready(init);
