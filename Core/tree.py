@@ -1,4 +1,5 @@
-import chess
+from json import JSONDecoder
+
 import chess.pgn
 
 from Core.node import Node
@@ -45,3 +46,23 @@ class Tree:
             if len(stack) == 0:
                 break
         return result
+
+    def to_json(self):
+        return self.root.to_json()
+
+    def from_json(self, json):
+        dict = JSONDecoder().decode(json)
+        node = Node.import_node(dict)
+        self.root = node
+        self.current = node
+        self.reset_parent(self.root)
+
+    def reset_parent(self, node):
+        stack = [node]
+        while True:
+            tmp = stack.pop()
+            for child in tmp.children:
+                child.parent = tmp
+                stack.append(child)
+            if len(stack) == 0:
+                break
