@@ -56,7 +56,10 @@ class Node(dict):
     @staticmethod
     def import_node(dict):
         board = chess.Board(dict['fen'])
-        move = dict['move']
+        if dict['move'] is not '':
+            move = chess.Move.from_uci(dict['move'])
+        else:
+            move = None
         children = []
         if dict['children'] is not None:
             if len(dict['children']) > 0:
