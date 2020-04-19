@@ -1,13 +1,23 @@
 var board = null
-var game = new Chess()
+var game = null
 
 
 /**
  * returns the start position
  */
 var getStartPosition = function () {
-    // todo load starting position fen
-    return 'start';
+    var fen = 'start'
+
+    $.ajax({
+        async: false,
+        type: 'GET',
+        url: "/get_start",
+        success: function (data) {
+             fen = data
+        }
+    });
+
+    return fen;
 }
 
 /**
@@ -23,10 +33,46 @@ var onDragStart = function (source, piece, position, orientation) {
         return false
     }
 };
+
+/**
+ * convert move from san to uci.
+ *
+ * @param move
+ */
+function SAN_to_UCI(move) {
+    return move.from + move.to
+}
+
+/**
+ * register Move
+ * @param move
+ */
+function registerMove(move) {
+    $.get("/play/" + SAN_to_UCI(move))
+}
+
 /**
  * onDrop function
  */
 var onDrop = function (source, target) {
+    moves = []
+
+    $.ajax({
+        async: false,
+        type: 'GET',
+        url: "/get_moves",
+        success: function (data) {
+            moves = JSON.parse(data);
+        }
+    });
+
+    console.log(moves)
+    console.log('move' + source+target)
+    console.log('res:'+!moves.includes(source+target))
+
+    // move not suggested
+    if (!moves.includes(source+target)) return 'snapback';
+
     // see if the move is legal
     var move = game.move({
         from: source,
@@ -37,6 +83,7 @@ var onDrop = function (source, target) {
     // illegal move
     if (move === null) return 'snapback';
 
+    registerMove(move)
     updateStatus();
 };
 
@@ -50,7 +97,6 @@ var onSnapEnd = function () {
 };
 
 function updateStatus() {
-    console.log('updated')
     var status = ''
 
     var moveColor = 'White'
@@ -97,9 +143,16 @@ var config = {
  */
 var init = function () {
     board = new ChessBoard('board', config);
+    game = new Chess(getStartPosition())
     $status = $('#status')
     $fen = $('#fen')
     $pgn = $('#pgn')
-    console.log($status)
     updateStatus();
 };
+
+
+// did this based on a stackoverflow answer
+// http://stackoverflow.com/questions/29493624/cant-display-board-whereas-the-id-is-same-when-i-use-chessboard-js
+setTimeout(function () {
+    init()
+}, 0);
