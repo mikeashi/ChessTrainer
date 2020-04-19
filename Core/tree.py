@@ -47,6 +47,14 @@ class Tree:
                 break
         return result
 
+    def get_moves(self):
+        result = self.search(self.current.board)
+        moves = []
+        for position in result:
+            for child in position.children:
+                moves.append(child.move.uci())
+        return moves
+
     def to_json(self):
         return self.root.to_json()
 
@@ -66,3 +74,7 @@ class Tree:
                 stack.append(child)
             if len(stack) == 0:
                 break
+
+    def export(self, name):
+        file = open(name, 'w+')
+        file.write(self.to_json())
