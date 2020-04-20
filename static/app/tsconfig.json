@@ -8,9 +8,6 @@
     "noImplicitAny": true,
     "noImplicitReturns": true,
     "noImplicitThis": true,
-    "strict": true,
-    "strictNullChecks": true,
-    "alwaysStrict": true,
     "target": "ES6",
     "module": "commonjs",
     "inlineSourceMap": true,
@@ -19,7 +16,7 @@
       "DOM",
       "ES6"
     ],
-    "outDir": "js/"
+    "outDir": "./"
   },
   "include": [
     "src/*.ts"
