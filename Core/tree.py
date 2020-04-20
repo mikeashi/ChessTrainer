@@ -52,7 +52,7 @@ class Tree:
         moves = []
         for position in result:
             for child in position.children:
-                moves.append(child.move.uci())
+                moves.append([chess.SQUARE_NAMES[child.move.from_square], chess.SQUARE_NAMES[child.move.to_square]])
         return moves
 
     def to_json(self):

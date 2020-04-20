@@ -1,4 +1,4 @@
-const $ = require( "jquery" );
+const $ = require("jquery");
 const Chessground = require('chessground').Chessground;
 const Chess = require('chess.js').Chess;
 const chess = new Chess();
@@ -6,40 +6,46 @@ const chess = new Chess();
 /**
  * return starting fen.
  */
-function getStartPositionFen():string {
+function getStartPositionFen(): string {
     let fen = null;
-
     $.ajax({
         async: false,
         type: 'GET',
         url: "/get_start",
-        success: function (data:string) {
-             fen = data
+        success: function (data: string) {
+            fen = data
         }
     });
-
-    console.log('fen:' + fen);
-
     return fen;
 }
+
 /**
- * return available moves
- * @param chess
+ * return moves.
  */
-function toDests(chess: any) {
-    console.log('all the moves are comming from here !!')
-    const dests = {};
-    // @ts-ignore
-    chess.SQUARES.forEach(s => {
-        const ms = chess.moves({square: s, verbose: true});
-        if (ms.length) {
-            // @ts-ignore
-            dests[s] = ms.map(m => m.to);
+function getMoves(): string[] {
+    let moves: string[] = []
+    $.ajax({
+        async: false,
+        type: 'GET',
+        url: "/get_moves",
+        success: function (data: string) {
+            moves = JSON.parse(data);
         }
     });
-    console.log('moves:');
-    console.log(dests);
-    return dests;
+    return moves;
+}
+
+/**
+ * return available moves
+ */
+function toDests() {
+    const dest = {};
+    // @ts-ignore
+    getMoves().forEach(m => {
+        // @ts-ignore
+        dest[m[0]] = [m[1]];
+    });
+    return dest;
 }
 
 /**
@@ -48,6 +54,15 @@ function toDests(chess: any) {
  */
 function toColor(chess: any) {
     return (chess.turn() === 'w') ? 'white' : 'black';
+}
+
+/**
+ * register Move
+ * @param move
+ */
+function registerMove(move:string) {
+    console.log('registerd move: ' + move)
+    $.get("/play/" + move)
 }
 
 
@@ -59,7 +74,7 @@ function playOtherSide(board, chess) {
             turnColor: toColor(chess),
             movable: {
                 color: toColor(chess),
-                dests: toDests(chess)
+                dests: toDests()
             }
         });
     };
@@ -71,7 +86,7 @@ const config = {
     movable: {
         color: 'white',
         free: false,
-        dests: toDests(chess),
+        dests: toDests(),
     },
     draggable: {
         showGhost: true
@@ -82,6 +97,7 @@ const board = Chessground(document.getElementById('chessboard'), config);
 
 // @ts-ignore
 window['board'] = board;
+
 
 board.set({
     movable: {events: {after: playOtherSide(board, chess)}}

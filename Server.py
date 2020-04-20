@@ -22,6 +22,9 @@ def play_move(move):
 def get_start():
     return app.fen()
 
+@server.route('/get_path')
+def get_path():
+    return app.get_path()
 
 @server.route('/get_turn')
 def get_turn():

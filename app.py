@@ -2,6 +2,7 @@ import json
 
 import chess
 
+from Core.node import Node
 from Core.tree import Tree
 
 
@@ -24,6 +25,9 @@ class App:
 
     def get_turn(self):
         return self.tree.current.board.turn
+
+    def get_path(self):
+        return json.dumps(self.test())
 
     def load(self):
         self.tree.from_json('{"fen": "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1", "move": "", '
@@ -62,3 +66,6 @@ class App:
                             '"hash": 2427794001084172013, "children": [{"fen": '
                             '"r1bqr1k1/ppp1bppp/2n2n2/3p2B1/3P4/2NBPN2/PP3PPP/R2Q1RK1 b - - 6 9", "move": "e1g1", '
                             '"hash": 6900705346847874557, "children": null}]}]}]}]}]}]}]}]}]}]}]}]}]}]}]}]}]}')
+
+    def test(self):
+        return Node.encode_path(self.tree.root)

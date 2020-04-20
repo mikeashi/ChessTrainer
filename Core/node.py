@@ -43,7 +43,7 @@ class Node(dict):
             for child in node.children:
                 children.append(Node.encode_node(child))
         elif len(node.children) == 1:
-            children = node.children[0]
+            children = Node.encode_node(node.children[0])
         else:
             children = None
         return {
@@ -70,3 +70,35 @@ class Node(dict):
             move,
             children
         )
+
+    @staticmethod
+    def encode_path(node):
+        if node is None:
+            return
+        if node.parent is None:
+            parent = None
+        else:
+            parent = node.parent.hash
+        if node.move is None:
+            move = ''
+        else:
+            move = node.move.uci()
+        main = None
+        if len(node.children) > 0:
+            children = []
+            for child in node.children:
+                if main is None:
+                    main = Node.encode_path(child)
+                else:
+                    children.append(Node.encode_path(child))
+        elif len(node.children) == 1:
+            children = Node.encode_path(node.children[0])
+        else:
+            children = None
+        return {
+            "move": move,
+            "hash": node.hash,
+            "parent_hash": parent,
+            "children":children,
+            "main": main
+        }
